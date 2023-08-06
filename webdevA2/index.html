@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Tutorial 2023</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <script src="index.js" defer></script>
+    <ul class="circles">
+    </ul>
+    <nav>
+        <div id="navbar">
+            <a onclick="scrollToElement('page1')"><img src="images/home.jpg"></a>
+            <a onclick="scrollToElement('page2')">GETTING STARTED</a>
+            <a onclick="scrollToElement('page5')">UNITY'S EDITOR</a>
+            <a onclick="scrollToElement('page7')">DEFINITIONS</a>
+        </div>
+    </nav>
+    <div class="progress-bar"></div>
+
+    <div id="main">
+        <div id="page1" class="page active">
+            <h1 id="mainText" class="center">
+                Learn Unity from<br>the ground up.
+            </h1>
+        </div>
+
+        <div id="page2" class="page">
+
+            <div class="title">
+                <h1>What is Unity?</h1>
+            </div>
+            <div class="article">
+                <p>Unity is a cross-platform game engine, initially released in 2005 to support the creation
+                    of games for
+                    the Mac OS X and has since grown to support multiple platforms like PC, Android & iOS and video game
+                    consoles like the PS5.<br><br>To get started with Unity, <a href="https://unity.com/download"
+                        target="_blank">head
+                        to Unity's download page, and download
+                        the
+                        installer for Unity Hub.</a> Unity Hub is an application that lets you manage your versions of
+                    Unity and
+                    allows you to add modules to each version of Unity.<br><br>When you open Unity Hub for the first
+                    time,
+                    you
+                    will see the screen as shown in the second picture. In the top left hand corner, select the icon of
+                    the person to sign up for a Unity
+                    account: Personal license. The personal license is free. </p>
+                <div>
+                    <img src="images/2-1.png" alt="Instructions on where on the Unity Site to find the Download button"
+                        class="articleimage">
+                    <img src="images/2-2.png" alt="Unity Hub's interface" class="articleimage">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="page3" class="page">
+
+            <div class="title">
+                <h1>And how do I install it?</h1>
+            </div>
+            <div class="article">
+                <p>After you have signed up and accepted the personal license, the next step would be to install Unity.
+                    In the menu on the left side, select Installs. On the top right side, select Install Editor, and
+                    install the recommended version. In this case it would be 2022.3.5f1.
+                    <br><br>You'll need to install Microsoft Visual Studio Community and Windows Build Support. You are
+                    also
+                    encouraged to download WebGL Build Support so you can upload your games to the web.
+                    <br><br>Once everything is installed, go to the Projects tab and create a New Project using the
+                    button
+                    in the top right hand corner. Select 2D Core, and rename your project and location as you wish.
+                    We'll be working with 2D for now to get familiar with the Unity Editor, but nothing much will change
+                    when moving to 3D. Your project will automatically launch after creation.
+                    <br><br>If you close the editor and would like to open your project again, launch Unity Hub and
+                    select
+                    your project.
+                </p>
+                <div>
+                    <img src="images/3-1.png" class="articleimage">
+                    <img src="images/3-2.png" class="articleimage">
+                </div>
+            </div>
+        </div>
+
+        <div id="page4" class="page">
+
+            <div class="title">
+                <h1>Getting Familiar with the editor</h1>
+            </div>
+            <div class="article">
+                <p>By following the steps in the previous pages, you should have the editor open, with nothing on your
+                    scene. The editor appears to be intimidating at first, but I'll walk you through.<br>You may view
+                    the Definitions section to understand some terms used by Unity, or jump to the Getting Familiar With
+                    The
+                    Editor section where we will be creating a few GameObjects in our Scene and assigning a few
+                    Components to them.
+                </p>
+                <div>
+                    <img src="images/4-1.png" class="articleimage">
+                </div>
+            </div>
+        </div>
+
+
+        <div id="page5" class="page">
+
+            <div class="title">
+                <h1>Getting Familiar with the editor</h1>
+            </div>
+            <div class="article">
+                <p>We're going to add a GameObject to our scene. Within the Grey area of the Hierarchy tab, right-click,
+                    select 2D Object, go to sprites, and select Square.
+
+                    You now have a Square in your Scene. In the Middle Top corner of your scene, select the Play button
+                    to see what it looks like in the game. The Square does not do anything, as it is simply a GameObject
+                    with two components: its Transform and a Sprite Renderer. You can see a GameObject's components by
+                    going to the Inspector tab.
+
+                    The Transform is a component that determines the position of the object in your game, it's rotation
+                    and scale. While the game is being played, select your Square in the hierarchy and play around with
+                    the values in the Transform component. By modifying Transform, position the Square such that it is
+                    to the left of the Screen and rotated at an angle.
+                </p>
+                <div>
+                    <img src="images/5-1.png" class="articleimage">
+                    <img src="images/5-2.png" class="articleimage">
+                </div>
+            </div>
+        </div>
+
+        <div id="page6" class="page">
+
+            <div class="title">
+                <h1>Getting Familiar with the editor</h1>
+            </div>
+            <div class="article">
+                <p>Now that we understand what the Transform component does, we can focus on the second component that
+                    comes with the Square. We will now focus on the Sprite Renderer. The Sprite Renderer is what gives
+                    the Square an appearance. Try changing the colour of the Square to Green.
+
+                    Before we proceed, is the Play button still highlighted? If so, click it to stop the preview of the
+                    game. You'll see that you are no longer on the Game tab, and instead sent back to the Scene tab. The
+                    changes you made while in Preview mode were also reverted. Do be careful with this when testing out
+                    changes in your game.
+
+                    Now that your Square has been reverted, we can experiment with new components that aren't attached
+                    to the cube. With the cube selected in the hierarchy, under the Inspector tab click Add Component,
+                    and add the Rigidbody2D component. Do check that you have added the 2D one instead of the regular
+                    Rigidbody component. Once you have added the Rigidbody component, preview the scene.
+                </p>
+                <div>
+                    <img src="images/6-1.png" class="articleimage">
+                    <img src="images/6-2.png" class="articleimage">
+                </div>
+            </div>
+        </div>
+
+        <div id="page7" class="page">
+
+            <div class="title">
+                <h1>Scenes, GameObjects and Components</h1>
+            </div>
+            <div class="article">
+                <p>In the earlier exercises, you added a bunch of Components to a GameObject. But just what are all of
+                    these? Think of it this way. A game is made out of Scenes. Think of them as different spaces. In the
+                    example on the right, the
+                    first image shows a Scene that serves as the title screen of the game. When pressing the play
+                    button, a new Scene is loaded. This Scene serves to show the main game.
+
+                    A scene is made of GameObjects. A GameObject is an object that is in your game. This includes your
+                    player, coins, and enemies.
+
+                    A GameObject consists of components. Components are what gives a GameObject behaviour, such as how
+                    it appears in game, how it interacts with other game objects, and how it reacts to user input.
+                </p>
+                <div>
+                    <img src="images/7-1.png" class="articleimage">
+                    <img src="images/7-2.png" class="articleimage">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
