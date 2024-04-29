@@ -1,9 +1,9 @@
-const cacheName = "DefaultCompany-sdw-0.1.0";
+const cacheName = "sdw-echelon-0.1.0";
 const contentToCache = [
-    "Build/webbuild.loader.js",
-    "Build/webbuild.framework.js",
-    "Build/webbuild.data",
-    "Build/webbuild.wasm",
+    "Build/sdw.loader.js",
+    "Build/sdw.framework.js",
+    "Build/sdw.data",
+    "Build/sdw.wasm",
     "TemplateData/style.css"
 
 ];
