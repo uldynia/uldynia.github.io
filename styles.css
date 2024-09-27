@@ -1,0 +1,36 @@
+body {
+    font-family: "Roboto", sans-serif;
+    color:white;
+    background-color: rgba(9,9,121,1);
+}
+.main {
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 100%);
+    margin: 0;
+}
+.center {
+    background-color: lightsteelblue;
+    color:black;
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 30px;
+    margin:40vh 0%;
+}
+.socials {
+    display: flexbox;
+}
+.socials img {
+    width: 30px;
+}
+.articles {
+    margin-bottom: 10%;
+}
+.article {
+    margin-bottom: 50px;
+}
+.article * {
+    margin:10px;
+}
+.articletext {
+    max-width: 800px;
+}
