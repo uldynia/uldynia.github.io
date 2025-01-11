@@ -1,9 +1,9 @@
 const cacheName = "uldynia-GROUNDBREAKERS-1.0";
 const contentToCache = [
-    "Build/build.loader.js",
-    "Build/build.framework.js",
-    "Build/build.data",
-    "Build/build.wasm",
+    "Build/New Web Profile.loader.js",
+    "Build/New Web Profile.framework.js",
+    "Build/New Web Profile.data",
+    "Build/New Web Profile.wasm",
     "TemplateData/style.css"
 
 ];
