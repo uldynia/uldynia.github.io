@@ -1,3 +1,4 @@
+import ActionButton from '@/components/ActionButton';
 import TypingEffect from '../components/TypingEffect';
 import { GameConfig } from '../config/games';
 
@@ -15,6 +16,7 @@ export default function ShiftbladeContent() {
     return (
         <>
             <TypingEffect>A 2D isometric game where your goal is to collect as many powerups while avoiding flying chainsaws.</TypingEffect>
+            <ActionButton href="/shiftblade">Play online</ActionButton>
         </>
     );
 }
