@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import { ImageSourcePropType, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export interface GameProps {
     icon: ImageSourcePropType;
@@ -20,7 +20,12 @@ export default function Game({ icon, title, children, background, side }: GamePr
             )}
 
             {/* Content layer with blur backdrop */}
-            <View style={styles.contentWrapper} pointerEvents="box-none">
+            <ScrollView
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollContent}
+                pointerEvents="box-none"
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={styles.layoutContainer} pointerEvents="box-none">
                     <View style={styles.blurContainer}>
                         <Text style={styles.title}>{title}</Text>
@@ -32,7 +37,7 @@ export default function Game({ icon, title, children, background, side }: GamePr
                         </View>
                     )}
                 </View>
-            </View>
+            </ScrollView>
         </View>
     );
 }
@@ -50,11 +55,16 @@ const styles = StyleSheet.create({
     backgroundLayer: {
         ...StyleSheet.absoluteFillObject,
     },
-    contentWrapper: {
+    scrollView: {
         flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        paddingTop: 60, // Extra padding for top
+        paddingBottom: 100, // Extra padding for bottom (nav buttons)
     },
     layoutContainer: {
         flexDirection: 'row',

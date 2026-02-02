@@ -92,7 +92,7 @@ export default function StarBackground({ starCount = 150, parallaxStrength = 20 
     );
 }
 
-const FADE_SIZE = 80;
+const FADE_SIZE = 40;
 
 const styles = StyleSheet.create({
     container: {

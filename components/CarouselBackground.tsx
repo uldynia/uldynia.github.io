@@ -198,7 +198,7 @@ export default function CarouselBackground({
     );
 }
 
-const FADE_SIZE = 80;
+const FADE_SIZE = 40;
 
 const styles = StyleSheet.create({
     container: {
