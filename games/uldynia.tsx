@@ -27,7 +27,7 @@ export default function UldyniaContent() {
             </Row>
             <Image
                 source={require('../assets/images/skills.png')}
-                style={{ width: 600, height: 120 }}
+                style={{ width: '100%', maxWidth: 600, height: 120, marginTop: 16 }}
                 resizeMode="contain"
             />
         </>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, Linking, Platform, Pressable, StyleSheet, ViewStyle } from 'react-native';
 
 interface ActionButtonProps {
-    icon: string;
+    icon?: string;
     children: string;
     href?: string;
     onPress?: () => void;
@@ -84,7 +84,7 @@ export default function ActionButton({ icon, children, href, onPress, style }: A
 
     return (
         <Pressable
-            style={[styles.button, style]}
+            style={[styles.button, !icon && styles.buttonNoIcon, style]}
             onPress={handlePress}
             onHoverIn={handleHoverIn}
             onHoverOut={handleHoverOut}
@@ -111,12 +111,14 @@ export default function ActionButton({ icon, children, href, onPress, style }: A
                     },
                 ]}
             />
-            <Image
-                source={{ uri: icon }}
-                // @ts-ignore - Web filter for inverting icon
-                style={[styles.icon, isHovered && { filter: 'invert(1)' }]}
-                resizeMode="contain"
-            />
+            {icon && (
+                <Image
+                    source={{ uri: icon }}
+                    // @ts-ignore - Web filter for inverting icon
+                    style={[styles.icon, isHovered && { filter: 'invert(1)' }]}
+                    resizeMode="contain"
+                />
+            )}
             <Animated.Text style={[styles.text, { color: animatedTextColor }]}>
                 {children}
             </Animated.Text>
@@ -128,6 +130,7 @@ const styles = StyleSheet.create({
     button: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.08)',
         paddingVertical: 10,
         paddingHorizontal: 16,
@@ -135,8 +138,12 @@ const styles = StyleSheet.create({
         gap: 10,
         overflow: 'hidden',
         position: 'relative',
+        minWidth: 120,
         // @ts-ignore - Web cursor
         cursor: 'pointer',
+    },
+    buttonNoIcon: {
+        paddingHorizontal: 24,
     },
     ripple: {
         position: 'absolute',

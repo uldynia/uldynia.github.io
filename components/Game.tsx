@@ -6,9 +6,10 @@ export interface GameProps {
     title: string;
     children: React.ReactNode;
     background?: React.ReactNode;
+    side?: React.ReactNode;
 }
 
-export default function Game({ icon, title, children, background }: GameProps) {
+export default function Game({ icon, title, children, background, side }: GameProps) {
     return (
         <View style={styles.container}>
             {/* Background layer */}
@@ -20,9 +21,16 @@ export default function Game({ icon, title, children, background }: GameProps) {
 
             {/* Content layer with blur backdrop */}
             <View style={styles.contentWrapper} pointerEvents="box-none">
-                <View style={styles.blurContainer}>
-                    <Text style={styles.title}>{title}</Text>
-                    {children}
+                <View style={styles.layoutContainer} pointerEvents="box-none">
+                    <View style={styles.blurContainer}>
+                        <Text style={styles.title}>{title}</Text>
+                        {children}
+                    </View>
+                    {side && (
+                        <View style={styles.sideContainer}>
+                            {side}
+                        </View>
+                    )}
                 </View>
             </View>
         </View>
@@ -48,6 +56,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
+    layoutContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 40,
+        width: '100%',
+        maxWidth: 1400,
+    },
     blurContainer: {
         alignItems: 'center',
         gap: 12,
@@ -59,7 +76,16 @@ const styles = StyleSheet.create({
         // @ts-ignore - Safari support
         WebkitBackdropFilter: 'blur(8px)',
         maxWidth: 700,
-        width: '100%',
+        flexGrow: 999, // Prefers to grow more than side
+        flexShrink: 1,
+        flexBasis: 500,
+    },
+    sideContainer: {
+        flexGrow: 1,
+        flexShrink: 1,
+        flexBasis: 350,
+        maxWidth: 600,
+        minWidth: 300,
     },
     title: {
         fontSize: 36,

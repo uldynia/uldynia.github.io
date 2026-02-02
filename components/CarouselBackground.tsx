@@ -1,8 +1,10 @@
+import { Asset } from 'expo-asset';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, ImageSourcePropType, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { CarouselImage } from '../config/games';
 interface CarouselBackgroundProps {
-    images: string[];
+    images: (string | ImageSourcePropType | CarouselImage)[];
     interval?: number;
     transitionDuration?: number;
 }
@@ -89,13 +91,67 @@ export default function CarouselBackground({
         return <View style={styles.container} />;
     }
 
+    const getSource = (image: string | ImageSourcePropType | CarouselImage) => {
+        if (!image) return undefined;
+        if (typeof image === 'string') {
+            return { uri: image };
+        }
+        if (image && typeof image === 'object' && 'source' in (image as any)) {
+            const imgObj = image as any;
+            return typeof imgObj.source === 'string' ? { uri: imgObj.source } : imgObj.source;
+        }
+        return image;
+    };
+
+    const getAlignment = (image: any): string | undefined => {
+        if (image && typeof image === 'object' && 'alignment' in image) {
+            return image.alignment;
+        }
+        return undefined;
+    };
+
+    const currentImage = images[currentIndex];
+    const source = getSource(currentImage);
+    const alignment = getAlignment(currentImage);
+
+    // Resolve URI for web backgroundImage
+    let imageUri = null;
+    if (Platform.OS === 'web' && source) {
+        if (typeof source === 'string') {
+            imageUri = source;
+        } else if (typeof source === 'object' && 'uri' in (source as any)) {
+            imageUri = (source as any).uri;
+        } else if (typeof source === 'number') {
+            imageUri = Asset.fromModule(source).uri;
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <Animated.Image
-                source={{ uri: images[currentIndex] }}
-                style={[styles.image, { opacity: fadeAnim }]}
-                resizeMode="cover"
-            />
+            {Platform.OS === 'web' && imageUri ? (
+                <Animated.View
+                    style={[
+                        styles.image,
+                        {
+                            opacity: fadeAnim,
+                            // @ts-ignore
+                            backgroundImage: `url("${imageUri}")`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: alignment || 'center',
+                            backgroundRepeat: 'no-repeat'
+                        }
+                    ]}
+                />
+            ) : (
+                <Animated.Image
+                    source={source as any}
+                    style={[
+                        styles.image,
+                        { opacity: fadeAnim }
+                    ]}
+                    resizeMode="cover"
+                />
+            )}
 
             {/* Dark overlay */}
             <View style={styles.overlay} />

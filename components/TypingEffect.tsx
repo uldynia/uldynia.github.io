@@ -10,7 +10,7 @@ interface TypingEffectProps {
 
 export default function TypingEffect({
     children,
-    speed = 25,
+    speed = 15,
     style,
     cursorColor = '#fff',
 }: TypingEffectProps) {

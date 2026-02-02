@@ -22,6 +22,7 @@ export default function GameRoute() {
     };
 
     const Content = gameConfig.Content;
+    const Side = gameConfig.Side;
 
     return (
         <Portfolio activeSlug={game}>
@@ -29,6 +30,7 @@ export default function GameRoute() {
                 icon={gameConfig.icon}
                 title={gameConfig.title}
                 background={renderBackground()}
+                side={Side ? <Side /> : undefined}
             >
                 <Content />
             </GameView>
