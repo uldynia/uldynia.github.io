@@ -10,7 +10,7 @@ interface TypingEffectProps {
 
 export default function TypingEffect({
     children,
-    speed = 50,
+    speed = 25,
     style,
     cursorColor = '#fff',
 }: TypingEffectProps) {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 18,
         color: '#d1d5db',
-        fontFamily: 'monospace',
+        fontFamily: 'GoogleSans-Regular',
     },
     cursor: {
         fontWeight: 'bold',

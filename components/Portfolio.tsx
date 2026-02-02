@@ -54,9 +54,13 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
         gap: 12,
-        backgroundColor: 'rgba(17, 24, 39, 0.95)',
-        borderBottomWidth: 1,
-        borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+        // Gradient-like effect using a slightly lighter top edge
+        backgroundColor: 'rgba(30, 35, 50, 0.95)',
+        // No border - using subtle shadow instead
+        shadowColor: 'rgba(100, 120, 180, 0.3)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 8,
     },
     navButton: {
         width: 48,
