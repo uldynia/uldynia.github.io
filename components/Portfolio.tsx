@@ -1,44 +1,51 @@
-import React, { Children, isValidElement, useState } from 'react';
-import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View } from 'react-native';
-import Game, { GameProps } from './Game';
+import { Href, useRouter } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { games } from '../config/games';
 
 interface PortfolioProps {
     children: React.ReactNode;
+    activeSlug: string;
 }
 
-export default function Portfolio({ children }: PortfolioProps) {
-    const [activeIndex, setActiveIndex] = useState(0);
+export default function Portfolio({ children, activeSlug }: PortfolioProps) {
+    const router = useRouter();
 
-    // Extract Game children and their icons
-    const games = Children.toArray(children).filter(
-        (child): child is React.ReactElement<GameProps> =>
-            isValidElement(child) && child.type === Game
-    );
+    const isActive = (game: typeof games[0], index: number) => {
+        // First game (uldynia) is active when activeSlug is empty or matches
+        if (index === 0) {
+            return activeSlug === '' || activeSlug === game.slug;
+        }
+        return activeSlug === game.slug;
+    };
 
-    const icons: ImageSourcePropType[] = games.map((game) => game.props.icon);
+    const getRoute = (game: typeof games[0], index: number): Href => {
+        // First game goes to home route
+        return (index === 0 ? '/' : `/${game.slug}`) as Href;
+    };
 
     return (
         <View style={styles.container}>
             {/* Navbar */}
             <View style={styles.navbar}>
-                {icons.map((icon, index) => (
+                {games.map((game, index) => (
                     <TouchableOpacity
-                        key={index}
+                        key={game.slug}
                         style={[
                             styles.navButton,
-                            activeIndex === index && styles.navButtonActive,
+                            isActive(game, index) && styles.navButtonActive,
                         ]}
-                        onPress={() => setActiveIndex(index)}
+                        onPress={() => router.push(getRoute(game, index))}
                         activeOpacity={0.7}
                     >
-                        <Image source={icon} style={styles.navIcon} resizeMode="contain" />
+                        <Image source={game.icon} style={styles.navIcon} resizeMode="contain" />
                     </TouchableOpacity>
                 ))}
             </View>
 
             {/* Active Game Content */}
             <View style={styles.content}>
-                {games[activeIndex]}
+                {children}
             </View>
         </View>
     );
@@ -54,31 +61,31 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
         gap: 12,
-        // Gradient-like effect using a slightly lighter top edge
         backgroundColor: 'rgba(30, 35, 50, 0.95)',
-        // No border - using subtle shadow instead
         shadowColor: 'rgba(100, 120, 180, 0.3)',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 1,
         shadowRadius: 8,
+        elevation: 4,
+        zIndex: 100,
     },
     navButton: {
-        width: 48,
-        height: 48,
-        borderRadius: 10,
-        backgroundColor: 'rgba(55, 65, 81, 0.8)',
+        width: 44,
+        height: 44,
+        borderRadius: 12,
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
-        shadowRadius: 6,
-        elevation: 8,
+        shadowRadius: 4,
+        elevation: 3,
     },
     navButtonActive: {
-        backgroundColor: 'rgba(99, 102, 241, 0.6)',
-        borderWidth: 2,
-        borderColor: 'rgba(165, 180, 252, 0.5)',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.3)',
     },
     navIcon: {
         width: 28,
