@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     },
     blurContainer: {
         alignItems: 'center',
-        gap: 16,
-        padding: 40,
+        gap: 12,
+        padding: 24,
         borderRadius: 20,
         backgroundColor: 'rgba(17, 24, 39, 0.3)',
         // @ts-ignore - Web backdrop-filter
@@ -59,12 +59,14 @@ const styles = StyleSheet.create({
         // @ts-ignore - Safari support
         WebkitBackdropFilter: 'blur(8px)',
         maxWidth: 700,
+        width: '100%',
     },
     title: {
-        fontSize: 48,
+        fontSize: 36,
         fontWeight: '300',
         color: '#fff',
         marginBottom: 8,
         fontFamily: 'GoogleSans-Regular',
+        textAlign: 'center',
     },
 });

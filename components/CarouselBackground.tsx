@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface CarouselBackgroundProps {
     images: string[];
@@ -106,9 +106,9 @@ export default function CarouselBackground({
             <View style={styles.gradientLeft} />
             <View style={styles.gradientRight} />
 
-            {/* Navigation buttons - only show if multiple images */}
+            {/* Navigation buttons - show on sides for desktop, bottom for mobile */}
             {showControls && (
-                <>
+                <View style={[styles.navButtonsContainer, (Platform.OS !== 'web' || typeof window !== 'undefined' && window.innerWidth < 768) && styles.navButtonsMobile]} pointerEvents="box-none">
                     <Pressable
                         style={[styles.navButton, styles.navButtonLeft]}
                         onPress={handlePrev}
@@ -121,7 +121,7 @@ export default function CarouselBackground({
                     >
                         <Text style={styles.navButtonText}>›</Text>
                     </Pressable>
-                </>
+                </View>
             )}
 
             {/* Dot selector at bottom - only show if multiple images */}
@@ -205,26 +205,36 @@ const styles = StyleSheet.create({
         zIndex: 10,
         pointerEvents: 'none',
     },
-    navButton: {
+    navButtonsContainer: {
+        ...StyleSheet.absoluteFillObject,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        zIndex: 30,
+    },
+    navButtonsMobile: {
+        bottom: 80,
+        top: 'auto',
+        justifyContent: 'center',
+        gap: 80,
         position: 'absolute',
-        top: '50%',
+        left: 0,
+        right: 0,
+        height: 60,
+    },
+    navButton: {
         width: 50,
         height: 50,
         borderRadius: 25,
         backgroundColor: 'rgba(255, 255, 255, 0.15)',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 30,
-        marginTop: -25,
         // @ts-ignore
         cursor: 'pointer',
     },
-    navButtonLeft: {
-        left: 20,
-    },
-    navButtonRight: {
-        right: 20,
-    },
+    navButtonLeft: {},
+    navButtonRight: {},
     navButtonText: {
         color: '#fff',
         fontSize: 28,

@@ -54,12 +54,13 @@ export default function TypingEffect({
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
+        justifyContent: 'center',
     },
     text: {
         fontSize: 18,
         color: '#d1d5db',
         fontFamily: 'GoogleSans-Regular',
+        textAlign: 'center',
     },
     cursor: {
         fontWeight: 'bold',

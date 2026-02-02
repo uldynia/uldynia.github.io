@@ -33,41 +33,22 @@ export default function StarBackground({ starCount = 150, parallaxStrength = 20 
         setStars(generatedStars);
     }, [starCount]);
 
-    // Mouse move handler for parallax (web)
     useEffect(() => {
-        if (Platform.OS !== 'web') return;
-
-        const handleMouseMove = (e: MouseEvent) => {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const offsetX = ((e.clientX - centerX) / centerX) * parallaxStrength;
-            // Inverted vertical direction
-            const offsetY = -((e.clientY - centerY) / centerY) * parallaxStrength;
-
-            setOffset({ x: offsetX, y: offsetY });
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, [parallaxStrength]);
-
-    // Gyroscope handler for mobile
-    useEffect(() => {
-        if (Platform.OS !== 'web') return;
-
-        if (typeof window !== 'undefined' && 'DeviceOrientationEvent' in window) {
-            const handleOrientation = (e: DeviceOrientationEvent) => {
-                if (e.gamma !== null && e.beta !== null) {
-                    const offsetX = (e.gamma / 45) * parallaxStrength;
-                    const clampedBeta = Math.max(-45, Math.min(45, e.beta - 45));
-                    const offsetY = -(clampedBeta / 45) * parallaxStrength;
-
-                    setOffset({ x: offsetX, y: offsetY });
-                }
+        // Mouse move handler for parallax (web/desktop)
+        if (Platform.OS === 'web') {
+            const handleMouseMove = (e: MouseEvent) => {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                const offsetX = ((e.clientX - centerX) / centerX) * parallaxStrength;
+                const offsetY = -((e.clientY - centerY) / centerY) * parallaxStrength;
+                setOffset({ x: offsetX, y: offsetY });
             };
 
-            window.addEventListener('deviceorientation', handleOrientation);
-            return () => window.removeEventListener('deviceorientation', handleOrientation);
+            window.addEventListener('mousemove', handleMouseMove);
+
+            return () => {
+                window.removeEventListener('mousemove', handleMouseMove);
+            };
         }
     }, [parallaxStrength]);
 
@@ -121,7 +102,7 @@ const styles = StyleSheet.create({
     },
     starsContainer: {
         ...StyleSheet.absoluteFillObject,
-        margin: -30,
+        margin: -100,
     },
     star: {
         position: 'absolute',

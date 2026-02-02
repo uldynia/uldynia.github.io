@@ -1,6 +1,6 @@
 import { Href, useRouter } from 'expo-router';
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { games } from '../config/games';
 
 interface PortfolioProps {
@@ -27,20 +27,26 @@ export default function Portfolio({ children, activeSlug }: PortfolioProps) {
     return (
         <View style={styles.container}>
             {/* Navbar */}
-            <View style={styles.navbar}>
-                {games.map((game, index) => (
-                    <TouchableOpacity
-                        key={game.slug}
-                        style={[
-                            styles.navButton,
-                            isActive(game, index) && styles.navButtonActive,
-                        ]}
-                        onPress={() => router.push(getRoute(game, index))}
-                        activeOpacity={0.7}
-                    >
-                        <Image source={game.icon} style={styles.navIcon} resizeMode="contain" />
-                    </TouchableOpacity>
-                ))}
+            <View style={styles.navbarContainer}>
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.navbar}
+                >
+                    {games.map((game, index) => (
+                        <TouchableOpacity
+                            key={game.slug}
+                            style={[
+                                styles.navButton,
+                                isActive(game, index) && styles.navButtonActive,
+                            ]}
+                            onPress={() => router.push(getRoute(game, index))}
+                            activeOpacity={0.7}
+                        >
+                            <Image source={game.icon} style={styles.navIcon} resizeMode="contain" />
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
             </View>
 
             {/* Active Game Content */}
@@ -56,11 +62,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#111827',
     },
-    navbar: {
-        flexDirection: 'row',
-        paddingVertical: 12,
-        paddingHorizontal: 16,
-        gap: 12,
+    navbarContainer: {
         backgroundColor: 'rgba(30, 35, 50, 0.95)',
         shadowColor: 'rgba(100, 120, 180, 0.3)',
         shadowOffset: { width: 0, height: 2 },
@@ -68,6 +70,12 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 4,
         zIndex: 100,
+    },
+    navbar: {
+        flexDirection: 'row',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        gap: 12,
     },
     navButton: {
         width: 44,
