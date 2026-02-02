@@ -19,12 +19,12 @@ export default function Index() {
           <TypingEffect>Game Developer. Software Engineer. Caffeine Junkie.</TypingEffect>
         </RandomTag>
         <Row>
-          <ActionButton icon="/linkedin.png">Hire On LinkedIn</ActionButton>
-          <ActionButton icon="/discord.png">Join my Discord</ActionButton>
+          <ActionButton icon="https://www.iconpacks.net/icons/1/free-linkedin-icon-130-thumb.png" href="https://linked.in/uldynia">Hire On LinkedIn</ActionButton>
+          <ActionButton icon="https://pngimg.com/d/discord_PNG8.png" href="https://dc.uldynia.org">Join my Discord</ActionButton>
         </Row>
         <Image
-          source={{ uri: '/skills.png' }}
-          style={{ width: 300, height: 60 }}
+          source={require('../assets/images/skills.png')}
+          style={{ width: 600, height: 120 }}
           resizeMode="contain"
         />
       </Game>

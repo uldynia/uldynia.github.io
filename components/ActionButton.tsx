@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Image, Platform, Pressable, StyleSheet, ViewStyle } from 'react-native';
+import { Animated, Image, Linking, Platform, Pressable, StyleSheet, ViewStyle } from 'react-native';
 
 interface ActionButtonProps {
     icon: string;
     children: string;
+    href?: string;
     onPress?: () => void;
     style?: ViewStyle;
 }
 
-export default function ActionButton({ icon, children, onPress, style }: ActionButtonProps) {
+export default function ActionButton({ icon, children, href, onPress, style }: ActionButtonProps) {
     const [isHovered, setIsHovered] = useState(false);
     const [rippleOrigin, setRippleOrigin] = useState({ x: 0, y: 0 });
     const rippleScale = useRef(new Animated.Value(0)).current;
@@ -16,8 +17,14 @@ export default function ActionButton({ icon, children, onPress, style }: ActionB
     const textColorAnim = useRef(new Animated.Value(0)).current;
 
     // Ripple size needs to be large enough to cover entire button from any corner
-    // Using 500px to ensure full coverage even from edges
     const RIPPLE_SIZE = 500;
+
+    const handlePress = () => {
+        if (href) {
+            Linking.openURL(href);
+        }
+        onPress?.();
+    };
 
     useEffect(() => {
         if (isHovered) {
@@ -49,7 +56,7 @@ export default function ActionButton({ icon, children, onPress, style }: ActionB
                 }),
             ]).start();
         }
-    }, [isHovered]);
+    }, [isHovered, rippleScale, rippleOpacity, textColorAnim]);
 
     const handleHoverIn = (e: any) => {
         if (Platform.OS === 'web' && e.nativeEvent) {
@@ -78,7 +85,7 @@ export default function ActionButton({ icon, children, onPress, style }: ActionB
     return (
         <Pressable
             style={[styles.button, style]}
-            onPress={onPress}
+            onPress={handlePress}
             onHoverIn={handleHoverIn}
             onHoverOut={handleHoverOut}
         >
@@ -106,7 +113,8 @@ export default function ActionButton({ icon, children, onPress, style }: ActionB
             />
             <Image
                 source={{ uri: icon }}
-                style={[styles.icon, isHovered && styles.iconHovered]}
+                // @ts-ignore - Web filter for inverting icon
+                style={[styles.icon, isHovered && { filter: 'invert(1)' }]}
                 resizeMode="contain"
             />
             <Animated.Text style={[styles.text, { color: animatedTextColor }]}>
@@ -139,10 +147,6 @@ const styles = StyleSheet.create({
         height: 20,
         borderRadius: 2,
         zIndex: 1,
-    },
-    iconHovered: {
-        // @ts-ignore - Web filter for inverting icon
-        filter: 'invert(1)',
     },
     text: {
         fontSize: 14,
