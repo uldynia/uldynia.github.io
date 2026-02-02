@@ -22,7 +22,7 @@ export default function UldyniaContent() {
                 <TypingEffect>Game Developer. Software Engineer. Caffeine Junkie.</TypingEffect>
             </RandomTag>
             <Row>
-                <ActionButton icon="https://www.iconpacks.net/icons/1/free-linkedin-icon-130-thumb.png" href="https://linked.in/uldynia">Hire On LinkedIn</ActionButton>
+                <ActionButton icon="https://www.iconpacks.net/icons/1/free-linkedin-icon-130-thumb.png" href="https://linked.in/uldynia">Hire on LinkedIn</ActionButton>
                 <ActionButton icon="https://pngimg.com/d/discord_PNG8.png" href="https://dc.uldynia.org">Join my Discord</ActionButton>
             </Row>
             <Image
