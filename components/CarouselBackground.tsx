@@ -162,38 +162,36 @@ export default function CarouselBackground({
             <View style={styles.gradientLeft} />
             <View style={styles.gradientRight} />
 
-            {/* Navigation buttons - show on sides for desktop, bottom for mobile */}
+            {/* Combined Carousel Controls */}
             {showControls && (
-                <View style={[styles.navButtonsContainer, (Platform.OS !== 'web' || typeof window !== 'undefined' && window.innerWidth < 768) && styles.navButtonsMobile]} pointerEvents="box-none">
+                <View style={styles.controlsContainer} pointerEvents="box-none">
                     <Pressable
-                        style={[styles.navButton, styles.navButtonLeft]}
+                        style={styles.navButton}
                         onPress={handlePrev}
                     >
                         <Text style={styles.navButtonText}>‹</Text>
                     </Pressable>
+
+                    <View style={styles.dotsContainer}>
+                        {images.map((_, index) => (
+                            <Pressable
+                                key={index}
+                                style={[
+                                    styles.dot,
+                                    currentIndex === index && styles.dotActive,
+                                ]}
+                                onPress={() => handleDotPress(index)}
+                                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            />
+                        ))}
+                    </View>
+
                     <Pressable
-                        style={[styles.navButton, styles.navButtonRight]}
+                        style={styles.navButton}
                         onPress={handleNext}
                     >
                         <Text style={styles.navButtonText}>›</Text>
                     </Pressable>
-                </View>
-            )}
-
-            {/* Dot selector at bottom - only show if multiple images */}
-            {showControls && (
-                <View style={styles.dotsContainer} pointerEvents="box-none">
-                    {images.map((_, index) => (
-                        <Pressable
-                            key={index}
-                            style={[
-                                styles.dot,
-                                currentIndex === index && styles.dotActive,
-                            ]}
-                            onPress={() => handleDotPress(index)}
-                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                        />
-                    ))}
                 </View>
             )}
         </View>
@@ -261,64 +259,50 @@ const styles = StyleSheet.create({
         zIndex: 10,
         pointerEvents: 'none',
     },
-    navButtonsContainer: {
-        ...StyleSheet.absoluteFillObject,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        zIndex: 30,
-    },
-    navButtonsMobile: {
-        bottom: 80,
-        top: 'auto',
-        justifyContent: 'center',
-        gap: 80,
+    controlsContainer: {
         position: 'absolute',
+        bottom: 30,
         left: 0,
         right: 0,
-        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 30,
+        zIndex: 30,
     },
     navButton: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        width: 44,
+        height: 44,
+        borderRadius: 22,
         backgroundColor: 'rgba(255, 255, 255, 0.15)',
         justifyContent: 'center',
         alignItems: 'center',
         // @ts-ignore
         cursor: 'pointer',
     },
-    navButtonLeft: {},
-    navButtonRight: {},
     navButtonText: {
         color: '#fff',
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: '300',
+        marginTop: Platform.OS === 'web' ? -4 : 0, // Visual centering for chevron
     },
     dotsContainer: {
-        position: 'absolute',
-        bottom: 30,
-        left: 0,
-        right: 0,
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
         gap: 10,
-        zIndex: 30,
     },
     dot: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
+        width: 8,
+        height: 8,
+        borderRadius: 4,
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         // @ts-ignore
         cursor: 'pointer',
     },
     dotActive: {
         backgroundColor: '#fff',
-        width: 12,
-        height: 12,
-        borderRadius: 6,
+        width: 10,
+        height: 10,
+        borderRadius: 5,
     },
 });
