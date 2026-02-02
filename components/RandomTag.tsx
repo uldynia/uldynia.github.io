@@ -5,14 +5,16 @@ interface RandomTagProps {
 }
 
 export default function RandomTag({ children }: RandomTagProps) {
-    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const childArray = Children.toArray(children);
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(
+        childArray.length > 0 ? Math.floor(Math.random() * childArray.length) : null
+    );
 
     useEffect(() => {
-        if (childArray.length > 0) {
+        if (childArray.length > 0 && selectedIndex === null) {
             setSelectedIndex(Math.floor(Math.random() * childArray.length));
         }
-    }, []);
+    }, [childArray.length, selectedIndex]);
 
     if (selectedIndex === null || childArray.length === 0) {
         return null;

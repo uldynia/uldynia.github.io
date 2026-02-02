@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import { games } from "../config/games";
 
 SplashScreen.preventAutoHideAsync();
@@ -70,6 +70,19 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <>
+      <Stack screenOptions={{ headerShown: false }} />
+      {/* Hidden preload layer for images to prevent flashing/disappearing on navigation */}
+      <View style={{ position: 'absolute', opacity: 0, width: 0, height: 0, overflow: 'hidden' }} pointerEvents="none">
+        {games.map((game, i) => {
+          const firstImg = game.carouselImages?.[0];
+          if (!firstImg) return null;
+          const source = typeof firstImg === 'object' && 'source' in firstImg ? (firstImg as any).source : firstImg;
+          return <Image key={i} source={source} />;
+        })}
+      </View>
+    </>
+  );
 }
 

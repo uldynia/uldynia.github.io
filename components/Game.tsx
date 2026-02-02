@@ -7,9 +7,10 @@ export interface GameProps {
     children: React.ReactNode;
     background?: React.ReactNode;
     side?: React.ReactNode;
+    overlay?: React.ReactNode;
 }
 
-export default function Game({ icon, title, children, background, side }: GameProps) {
+export default function Game({ icon, title, children, background, side, overlay }: GameProps) {
     return (
         <View style={styles.container}>
             {/* Background layer */}
@@ -38,6 +39,13 @@ export default function Game({ icon, title, children, background, side }: GamePr
                     )}
                 </View>
             </ScrollView>
+
+            {/* Overlay layer (on top of everything) */}
+            {overlay && (
+                <View style={styles.overlayLayer} pointerEvents="box-none">
+                    {overlay}
+                </View>
+            )}
         </View>
     );
 }
@@ -54,6 +62,10 @@ const styles = StyleSheet.create({
     },
     backgroundLayer: {
         ...StyleSheet.absoluteFillObject,
+    },
+    overlayLayer: {
+        ...StyleSheet.absoluteFillObject,
+        zIndex: 50,
     },
     scrollView: {
         flex: 1,

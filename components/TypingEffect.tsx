@@ -14,13 +14,22 @@ export default function TypingEffect({
     style,
     cursorColor = '#fff',
 }: TypingEffectProps) {
-    const [displayedText, setDisplayedText] = useState('');
+    // Start with full text so it's visible in static HTML (SEO)
+    // and to users with JS disabled.
+    const [displayedText, setDisplayedText] = useState(children);
     const [showCursor, setShowCursor] = useState(true);
-    const indexRef = useRef(0);
+    const indexRef = useRef(children.length);
+    const [isStarted, setIsStarted] = useState(false);
 
     useEffect(() => {
+        // Once mounted, reset and start the animation
         setDisplayedText('');
         indexRef.current = 0;
+        setIsStarted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!isStarted) return;
 
         const typingInterval = setInterval(() => {
             if (indexRef.current < children.length) {
@@ -32,7 +41,7 @@ export default function TypingEffect({
         }, speed);
 
         return () => clearInterval(typingInterval);
-    }, [children, speed]);
+    }, [isStarted, children, speed]);
 
     useEffect(() => {
         const cursorInterval = setInterval(() => {
