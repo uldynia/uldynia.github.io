@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     text: {
         color: '#fff',
         fontSize: 14,
-        fontFamily: 'GoogleSans-Medium',
+        fontFamily: 'GoogleSans-Regular',
         zIndex: 1,
     },
 });

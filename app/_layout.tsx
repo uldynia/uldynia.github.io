@@ -7,9 +7,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    "GoogleSans-Regular": require("../assets/fonts/GoogleSans-Regular.ttf"),
-    "GoogleSans-Medium": require("../assets/fonts/GoogleSans-Medium.ttf"),
-    "GoogleSans-Bold": require("../assets/fonts/GoogleSans-Bold.ttf"),
+    "GoogleSans-Regular": require("../assets/fonts/GoogleSans_17pt-Regular.ttf"),
   });
 
   useEffect(() => {

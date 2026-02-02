@@ -53,5 +53,6 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         color: '#fff',
         marginBottom: 8,
+        fontFamily: 'GoogleSans-Regular',
     },
 });
