@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Image, Platform, Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Image, Platform, Pressable, StyleSheet, ViewStyle } from 'react-native';
 
 interface ActionButtonProps {
     icon: string;
@@ -10,46 +10,108 @@ interface ActionButtonProps {
 
 export default function ActionButton({ icon, children, onPress, style }: ActionButtonProps) {
     const [isHovered, setIsHovered] = useState(false);
-    const [ripplePosition, setRipplePosition] = useState({ x: 0, y: 0 });
-    const buttonRef = useRef<View>(null);
+    const [rippleOrigin, setRippleOrigin] = useState({ x: 0, y: 0 });
+    const rippleScale = useRef(new Animated.Value(0)).current;
+    const rippleOpacity = useRef(new Animated.Value(0)).current;
+    const textColorAnim = useRef(new Animated.Value(0)).current;
 
-    const handleMouseEnter = (e: any) => {
-        if (Platform.OS === 'web' && buttonRef.current) {
-            const rect = (e.target as HTMLElement).getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            setRipplePosition({ x, y });
+    // Ripple size needs to be large enough to cover entire button from any corner
+    // Using 500px to ensure full coverage even from edges
+    const RIPPLE_SIZE = 500;
+
+    useEffect(() => {
+        if (isHovered) {
+            rippleScale.setValue(0);
+            rippleOpacity.setValue(1);
+            Animated.parallel([
+                Animated.timing(rippleScale, {
+                    toValue: 1,
+                    duration: 350,
+                    useNativeDriver: Platform.OS !== 'web',
+                }),
+                Animated.timing(textColorAnim, {
+                    toValue: 1,
+                    duration: 200,
+                    useNativeDriver: Platform.OS !== 'web',
+                }),
+            ]).start();
+        } else {
+            Animated.parallel([
+                Animated.timing(rippleOpacity, {
+                    toValue: 0,
+                    duration: 200,
+                    useNativeDriver: Platform.OS !== 'web',
+                }),
+                Animated.timing(textColorAnim, {
+                    toValue: 0,
+                    duration: 200,
+                    useNativeDriver: Platform.OS !== 'web',
+                }),
+            ]).start();
+        }
+    }, [isHovered]);
+
+    const handleHoverIn = (e: any) => {
+        if (Platform.OS === 'web' && e.nativeEvent) {
+            const target = e.currentTarget || e.target;
+            if (target && target.getBoundingClientRect) {
+                const rect = target.getBoundingClientRect();
+                setRippleOrigin({
+                    x: e.nativeEvent.clientX - rect.left,
+                    y: e.nativeEvent.clientY - rect.top,
+                });
+            }
         }
         setIsHovered(true);
     };
 
-    const handleMouseLeave = () => {
+    const handleHoverOut = () => {
         setIsHovered(false);
     };
 
+    // Interpolate text color from white to dark
+    const animatedTextColor = textColorAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['#ffffff', '#111827'],
+    });
+
     return (
         <Pressable
-            ref={buttonRef}
             style={[styles.button, style]}
             onPress={onPress}
-            // @ts-ignore - Web-only props
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onHoverIn={handleHoverIn}
+            onHoverOut={handleHoverOut}
         >
-            {/* Ripple effect overlay */}
-            {isHovered && (
-                <View
-                    style={[
-                        styles.ripple,
-                        {
-                            left: ripplePosition.x,
-                            top: ripplePosition.y,
-                        },
-                    ]}
-                />
-            )}
-            <Image source={{ uri: icon }} style={styles.icon} resizeMode="contain" />
-            <Text style={styles.text}>{children}</Text>
+            {/* Animated ripple effect - pure white */}
+            <Animated.View
+                style={[
+                    styles.ripple,
+                    {
+                        width: RIPPLE_SIZE,
+                        height: RIPPLE_SIZE,
+                        borderRadius: RIPPLE_SIZE / 2,
+                        left: rippleOrigin.x - RIPPLE_SIZE / 2,
+                        top: rippleOrigin.y - RIPPLE_SIZE / 2,
+                        opacity: rippleOpacity,
+                        transform: [
+                            {
+                                scale: rippleScale.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, 1],
+                                }),
+                            },
+                        ],
+                    },
+                ]}
+            />
+            <Image
+                source={{ uri: icon }}
+                style={[styles.icon, isHovered && styles.iconHovered]}
+                resizeMode="contain"
+            />
+            <Animated.Text style={[styles.text, { color: animatedTextColor }]}>
+                {children}
+            </Animated.Text>
         </Pressable>
     );
 }
@@ -70,13 +132,7 @@ const styles = StyleSheet.create({
     },
     ripple: {
         position: 'absolute',
-        width: 300,
-        height: 300,
-        borderRadius: 150,
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
-        transform: [{ translateX: -150 }, { translateY: -150 }],
-        // @ts-ignore - Web animation
-        transition: 'transform 0.4s ease-out, opacity 0.4s ease-out',
+        backgroundColor: '#ffffff',
     },
     icon: {
         width: 20,
@@ -84,8 +140,11 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         zIndex: 1,
     },
+    iconHovered: {
+        // @ts-ignore - Web filter for inverting icon
+        filter: 'invert(1)',
+    },
     text: {
-        color: '#fff',
         fontSize: 14,
         fontFamily: 'GoogleSans-Regular',
         zIndex: 1,
