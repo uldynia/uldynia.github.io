@@ -1,27 +1,31 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export interface GameProps {
     icon: string;
-    background: string;
     title: string;
     children: React.ReactNode;
+    background?: React.ReactNode;
 }
 
-export default function Game({ icon, background, title, children }: GameProps) {
+export default function Game({ icon, title, children, background }: GameProps) {
     return (
-        <ImageBackground
-            source={{ uri: background }}
-            style={styles.background}
-            resizeMode="cover"
-        >
-            <View style={styles.overlay}>
-                <View style={styles.content}>
+        <View style={styles.container}>
+            {/* Background layer */}
+            {background && (
+                <View style={styles.backgroundLayer} pointerEvents="box-none">
+                    {background}
+                </View>
+            )}
+
+            {/* Content layer with blur backdrop */}
+            <View style={styles.contentWrapper} pointerEvents="box-none">
+                <View style={styles.blurContainer}>
                     <Text style={styles.title}>{title}</Text>
                     {children}
                 </View>
             </View>
-        </ImageBackground>
+        </View>
     );
 }
 
@@ -31,22 +35,30 @@ Game.getIcon = (element: React.ReactElement<GameProps>): string => {
 };
 
 const styles = StyleSheet.create({
-    background: {
+    container: {
         flex: 1,
-        width: '100%',
-        height: '100%',
+        backgroundColor: '#111827',
     },
-    overlay: {
+    backgroundLayer: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    contentWrapper: {
         flex: 1,
-        backgroundColor: 'rgba(17, 24, 39, 0.85)',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
     },
-    content: {
+    blurContainer: {
         alignItems: 'center',
         gap: 16,
-        maxWidth: 600,
+        padding: 40,
+        borderRadius: 20,
+        backgroundColor: 'rgba(17, 24, 39, 0.3)',
+        // @ts-ignore - Web backdrop-filter
+        backdropFilter: 'blur(8px)',
+        // @ts-ignore - Safari support
+        WebkitBackdropFilter: 'blur(8px)',
+        maxWidth: 700,
     },
     title: {
         fontSize: 48,

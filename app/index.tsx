@@ -1,9 +1,11 @@
 import { Image } from 'react-native';
 import ActionButton from '../components/ActionButton';
+import CarouselBackground from '../components/CarouselBackground';
 import Game from '../components/Game';
 import Portfolio from '../components/Portfolio';
 import RandomTag from '../components/RandomTag';
 import Row from '../components/Row';
+import StarBackground from '../components/StarBackground';
 import TypingEffect from '../components/TypingEffect';
 
 export default function Index() {
@@ -11,8 +13,8 @@ export default function Index() {
     <Portfolio>
       <Game
         icon="/icon.png"
-        background="/background.png"
         title="uldynia"
+        background={<StarBackground starCount={200} parallaxStrength={25} />}
       >
         <RandomTag>
           <TypingEffect>Caffeine-powered Software Engineer.</TypingEffect>
@@ -31,8 +33,16 @@ export default function Index() {
 
       <Game
         icon="/game-icon.png"
-        background="/game-bg.png"
         title="My Game"
+        background={
+          <CarouselBackground
+            images={[
+              'https://picsum.photos/1920/1080?random=1',
+              'https://picsum.photos/1920/1080?random=2',
+              'https://picsum.photos/1920/1080?random=3',
+            ]}
+          />
+        }
       >
         <TypingEffect>An awesome indie game project.</TypingEffect>
         <Row>
@@ -43,4 +53,3 @@ export default function Index() {
     </Portfolio>
   );
 }
-
