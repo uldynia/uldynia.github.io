@@ -26,6 +26,9 @@ jobs:
       - name: Export Web 🚀
         run: npx expo export --platform web
 
+      - name: Disable Jekyll 🛡️
+        run: touch dist/.nojekyll
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
