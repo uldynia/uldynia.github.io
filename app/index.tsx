@@ -12,7 +12,7 @@ export default function Index() {
   return (
     <Portfolio>
       <Game
-        icon="/icon.png"
+        icon={require('../assets/images/favicon.png')}
         title="uldynia"
         background={<StarBackground starCount={200} parallaxStrength={25} />}
       >
@@ -32,7 +32,7 @@ export default function Index() {
       </Game>
 
       <Game
-        icon="/game-icon.png"
+        icon={require('../assets/images/favicon.png')}
         title="My Game"
         background={
           <CarouselBackground

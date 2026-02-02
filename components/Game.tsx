@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 
 export interface GameProps {
-    icon: string;
+    icon: ImageSourcePropType;
     title: string;
     children: React.ReactNode;
     background?: React.ReactNode;
@@ -30,7 +30,7 @@ export default function Game({ icon, title, children, background }: GameProps) {
 }
 
 // Export a helper to extract icon from Game element
-Game.getIcon = (element: React.ReactElement<GameProps>): string => {
+Game.getIcon = (element: React.ReactElement<GameProps>): ImageSourcePropType => {
     return element.props.icon;
 };
 

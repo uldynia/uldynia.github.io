@@ -1,5 +1,5 @@
 import React, { Children, isValidElement, useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Game, { GameProps } from './Game';
 
 interface PortfolioProps {
@@ -15,7 +15,7 @@ export default function Portfolio({ children }: PortfolioProps) {
             isValidElement(child) && child.type === Game
     );
 
-    const icons = games.map((game) => game.props.icon);
+    const icons: ImageSourcePropType[] = games.map((game) => game.props.icon);
 
     return (
         <View style={styles.container}>
@@ -31,7 +31,7 @@ export default function Portfolio({ children }: PortfolioProps) {
                         onPress={() => setActiveIndex(index)}
                         activeOpacity={0.7}
                     >
-                        <Image source={{ uri: icon }} style={styles.navIcon} resizeMode="contain" />
+                        <Image source={icon} style={styles.navIcon} resizeMode="contain" />
                     </TouchableOpacity>
                 ))}
             </View>
