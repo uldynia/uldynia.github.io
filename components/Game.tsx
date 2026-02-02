@@ -65,6 +65,8 @@ const styles = StyleSheet.create({
         padding: 20,
         paddingTop: 60, // Extra padding for top
         paddingBottom: 100, // Extra padding for bottom (nav buttons)
+        // @ts-ignore - RN Web support for pointerEvents in style
+        pointerEvents: 'box-none',
     },
     layoutContainer: {
         flexDirection: 'row',

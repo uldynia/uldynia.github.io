@@ -27,7 +27,7 @@ export default function Portfolio({ children, activeSlug }: PortfolioProps) {
     return (
         <View style={styles.container}>
             {/* Navbar */}
-            <View style={styles.navbarContainer}>
+            <View style={styles.navbarContainer} pointerEvents="box-none">
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -63,12 +63,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#111827',
     },
     navbarContainer: {
-        backgroundColor: 'rgba(30, 35, 50, 0.95)',
-        shadowColor: 'rgba(100, 120, 180, 0.3)',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 1,
-        shadowRadius: 8,
-        elevation: 4,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        // @ts-ignore - Web gradient
+        background: 'linear-gradient(to bottom, rgba(17, 24, 39, 0.8) 0%, rgba(17, 24, 39, 0.4) 50%, transparent 100%)',
         zIndex: 100,
     },
     navbar: {
