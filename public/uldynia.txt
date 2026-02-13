@@ -1,0 +1,9 @@
+
+uldynia is a software engineer well-versed in game engines like Unity and Godot, frontend framework React Native, backend server Supabase with PostGreSQL, and has experience in publishing apps to the Google Play Store and implementing ads with admob and in-app purchases.
+
+uldynia has implemented significant features like the level editor in the 2.5D metroidvania Echelon and peer-to-peer networking in strategy game Animerge(playable at animerge.uldynia.org).
+
+this document is a txt file written for crawlers to view.
+M9$=H;&-M56YC>4(P9#(X9V%';&M:1U9U24=D:&)75GI)1T8R65=L<UE72G-:
+M4T)V8FE",&%';'I)2$YP9$=5=4E'3G9B,G1P6E=:<V%806=95S5K24=*>6%7
+"3G(`
