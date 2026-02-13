@@ -3,7 +3,13 @@ import CarouselBackground from '../components/CarouselBackground';
 import GameView from '../components/Game';
 import Portfolio from '../components/Portfolio';
 import StarBackground from '../components/StarBackground';
-import { getGameBySlug } from '../config/games';
+import { games, getGameBySlug } from '../config/games';
+
+export function generateStaticParams(): { game: string }[] {
+    return games.map((game) => ({
+        game: game.slug,
+    }));
+}
 
 export default function GameRoute() {
     const { game } = useLocalSearchParams<{ game: string }>();
