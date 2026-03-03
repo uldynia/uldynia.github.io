@@ -16,7 +16,7 @@ export default function ShiftbladeContent() {
     return (
         <>
             <TypingEffect>A 2D isometric game where your goal is to collect as many powerups while avoiding flying chainsaws.</TypingEffect>
-            <ActionButton href="/shiftblade">Play online</ActionButton>
+            <ActionButton href="/shiftbladegame">Play online</ActionButton>
         </>
     );
 }
